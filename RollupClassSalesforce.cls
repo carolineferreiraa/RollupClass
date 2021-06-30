@@ -1,4 +1,4 @@
-public class RollupClass {
+public class RollupClassSalesforce {
 
 //Método para atualização e sumarização de um campo do objeto AccountTeamMember em um campo do objeto Account
   public static void RollupMethod (List<AccountTeamMember> oldTrigger, List<AccountTeamMember> newTrigger)

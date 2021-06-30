@@ -25,18 +25,20 @@ public class RollupClass {
         
         List<Account> updateFieldAcc = new List<Account>();
         List<Account> accList = [SELECT Id, field_to_recieve_rollup__c from Account WHERE Id in : accId LIMIT 1];
-        AccountTeamMember accTeam = [SELECT field_to_rollup__c, accountid 
+        List<AccountTeamMember> accTeam = [SELECT field_to_rollup__c, accountid 
                                                FROM AccountTeamMember 
                                                WHERE isDeleted = false 
                                                AND AccountId in : accId 
                                                ORDER BY field_to_rollup__c 
                                                DESC NULLS LAST LIMIT 1];
-
-        for(Account acc : accList)
-        {
-            acc.field_to_recieve_rollup__c = accTeam.field_to_rollup__c;
-            updateFieldAcc.add(acc);
-        }
-        update(updateFieldAcc);
+	  if(accTeam.size() > 0)
+	  {
+		for(Account acc : accList)
+		{
+		    acc.field_to_recieve_rollup__c = accTeam[0].field_to_rollup__c;
+		    updateFieldAcc.add(acc);
+		}
+		update(updateFieldAcc);
+	  }
     }
 }
